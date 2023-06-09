@@ -9,7 +9,7 @@ services:
       POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:-1234}
       PGDATA: /data/postgres
     volumes:
-       - c:\Database\aplicativoVoz:/data/postgres
+       - c:\Database\clinica:/data/postgres
     ports:
       - "5432:5432"
     networks:
