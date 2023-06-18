@@ -1,10 +1,12 @@
 <?php
 
 namespace App\Models\Entitys;
+
+use App\Models\Repository\ClinicaRepository;
 use Doctrine\ORM\Mapping as ORM;
 
-#[ORM\Entity]
 #[ORM\Table(schema: 'clinica', name: 'clinica')]
+#[ORM\Entity(ClinicaRepository::class)]
 class Clinica{
     
      /**
@@ -76,7 +78,7 @@ class Clinica{
     /**
      * @return string
      */
-    public function geTelefone(): string
+    public function getTelefone(): string
     {
         return $this->telefone;
     }
@@ -84,7 +86,7 @@ class Clinica{
     /**
      * @param string $telefone
      */
-    public function seTelefone(string $telefone)
+    public function setTelefone(string $telefone)
     {
         $this->telefone = $telefone;
     }

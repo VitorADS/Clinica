@@ -86,8 +86,6 @@ class Router{
 
         //Padrao de validacao de url
         $patternRoute = '/^' . str_replace('/', '\/', $route) . '$/';
-
-        if(isset($params['entity'])) $this->request->setService(($params['entity']));
         $this->routes[$patternRoute][$method] = $params;
     }
 

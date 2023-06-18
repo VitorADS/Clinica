@@ -32,7 +32,7 @@ class EntityManagerCreator{
 
         // configuring the database connection
         $connection = DriverManager::getConnection([
-            'dbname' => 'aplicativoVoz',
+            'dbname' => 'clinica',
             'user' => 'postgres',
             'password' => '1234',
             'host' => 'localhost',

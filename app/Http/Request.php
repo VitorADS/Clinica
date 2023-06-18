@@ -43,35 +43,14 @@ class Request{
      */
     public $user;
 
-    /**
-     * @var EntityManager
-     */
-    private $em;
-
-    /**
-     * @var AbstractService
-     */
-    private $service;
-
     public function __construct(Router $router)
     {
         $this->router = $router;
         $this->queryParams = $_GET ?? [];
         $this->headers = getallheaders();
         $this->httpMethod = $_SERVER['REQUEST_METHOD'] ?? '';
-        $this->em = EntityManagerCreator::getEntityManager();
         $this->setUri();
         $this->setPostVars();
-    }
-
-    public function getService()
-    {
-        return $this->service;
-    }
-
-    public function setService(string $entity)
-    {
-        $this->service = new AbstractService($this->em, $entity);
     }
 
     /**
@@ -95,14 +74,6 @@ class Request{
 
         $xUri = explode('?', $this->uri);
         $this->uri = $xUri[0];
-    }
-
-    /**
-     * @return EntityManager
-     */
-    public function getEm(): EntityManager
-    {
-        return $this->em;
     }
 
     /**
