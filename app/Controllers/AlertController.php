@@ -13,7 +13,7 @@ class AlertController extends PageController{
      */
     public static function getSuccess(string $mensagem): string
     {
-        return View::render('clinica/alert/status', [
+        return View::render('alert/status', [
             'tipo' => 'success',
             'mensagem' => $mensagem
         ]);
@@ -25,7 +25,7 @@ class AlertController extends PageController{
      */
     public static function getError(string $mensagem): string
     {
-        return View::render('clinica/alert/status', [
+        return View::render('alert/status', [
             'tipo' => 'danger',
             'mensagem' => $mensagem
         ]);

@@ -8,5 +8,4 @@ $router = new Router(URL);
 
 include __DIR__ . '/routes/routes.php';
 
-$router->run()
-    ->sendResponse();
+$router->run()->sendResponse();

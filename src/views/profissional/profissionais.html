@@ -1,0 +1,22 @@
+<h1 align="center">Listagem de Profissionais</h1><hr/>
+
+<a href="{{URL}}/profissional/criar">
+    <button class="btn btn-success">Cadastrar Profissional</button> 
+</a>
+<hr/>
+
+{{status}}
+
+<table class="table table-light table-striped text-center">
+    <thead>
+        <tr>
+            <th>Nome</th>
+            <th>E-mail</th>
+            <th>Telefone</th>
+            <th>Acoes</th>
+        </tr>
+    </thead>
+    <body>
+        {{profissionais}}
+    </body>
+</table>

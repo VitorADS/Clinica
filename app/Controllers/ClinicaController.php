@@ -9,7 +9,8 @@ use App\Models\Repository\ClinicaRepository;
 use App\Utils\View;
 use Doctrine\ORM\EntityRepository;
 
-class ClinicaController extends PageController{
+class ClinicaController extends PageController
+{
 
     private static function getStatus(Request $request): string
     {
@@ -30,6 +31,12 @@ class ClinicaController extends PageController{
             case 'deletederror':
                 return AlertController::getSuccess('Houve algum erro ao tentar remover a clinica!');
                 break;
+            case 'emptyEdit':
+                return AlertController::getError('Esta clinica nao existe!');
+                break;
+            case 'edited':
+                return AlertController::getSuccess('Clinica editada com sucesso!');
+                break;
             default:
                 return '';
                 break;
@@ -38,6 +45,7 @@ class ClinicaController extends PageController{
 
     /**
      * @param Request $request
+     * @param ClinicaRepository $repository
      * @return string
      */
     public static function getHome(Request $request, ClinicaRepository $repository) : string
@@ -67,7 +75,11 @@ class ClinicaController extends PageController{
      */
     public static function criarClinica(Request $request): string
     {
-        $content = View::render('clinica/criarClinica', [
+        $content = View::render('clinica/form', [
+            'action' => 'Cadastrar',
+            'nome' => '',
+            'telefone' => '',
+            'email' => '',
             'status' => self::getStatus($request)
         ]);
 
@@ -75,6 +87,8 @@ class ClinicaController extends PageController{
     }
 
     /**
+     * @param Request $request
+     * @param ClinicaRepository $repository
      * @return string
      */
     public static function criarClinicaAction(Request $request, ClinicaRepository $repository)
@@ -89,14 +103,66 @@ class ClinicaController extends PageController{
         $clinica = $repository->save($clinica);
 
         if($clinica instanceof Clinica && is_numeric($clinica->getId())){
-            $request->getRouter()->redirect('/clinic/criar?status=created');
+            $request->getRouter()->redirect('/clinic/editar/' . $clinica->getId() . '?status=created');
 
         } else {
             $request->getRouter()->redirect('/clinic/criar?status=error');
         }
     }
 
-        /**
+    /**
+     * @param Request $request
+     * @param ClinicaRepository $repository
+     * @return string
+     */
+    public static function editarClinica(Request $request, ClinicaRepository $repository, int $id): string
+    {
+        $clinica = $repository->findOneBy(['id' => $id]);
+
+        if(!$clinica instanceof Clinica){
+            $request->getRouter()->redirect('/clinic?status=emptyEdit');
+            exit;
+        }
+
+        $content = '';
+        $content .= View::render('clinica/form', [
+            'action' => 'Editar',
+            'nome' => $clinica->getNome(),
+            'telefone' => $clinica->getTelefone(),
+            'email' => $clinica->getEmail(),
+            'status' => self::getStatus($request)
+        ]);
+
+        return parent::getPage('Editar Clinica', $content);
+    }
+
+    /**
+     * @param Request $request
+     * @param ClinicaRepository $repository
+     * @return string
+     */
+    public static function editarClinicaAction(Request $request, ClinicaRepository $repository, int $id)
+    {
+        $clinica = $repository->findOneBy(['id' => $id]);
+
+        if(!$clinica instanceof Clinica){
+            $request->getRouter()->redirect('/clinic?status=emptyEdit');
+            exit;
+        }
+
+        $postVars = $request->getPostVars();
+
+        $clinica->setNome($postVars['nome']);
+        $clinica->setTelefone($postVars['telefone']);
+        $clinica->setEmail($postVars['email']);
+
+        $repository->save($clinica);
+        $request->getRouter()->redirect('/clinic/editar/' . $id . '?status=edited');
+    }
+
+    /**
+     * @param Request $request
+     * @param ClinicaRepository $repository
      * @return string
      */
     public static function removerClinicaAction(Request $request, ClinicaRepository $repository, int $id)

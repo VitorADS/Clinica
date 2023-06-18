@@ -1,12 +1,14 @@
 <?php
 
 namespace App\Models\Entitys;
+
+use App\Models\Repository\ProfissionalClinicaRepository;
 use Doctrine\ORM\Mapping as ORM;
 use Doctrine\ORM\Mapping\JoinColumn;
 use Doctrine\ORM\Mapping\ManyToOne;
 
-#[ORM\Entity]
 #[ORM\Table(schema: 'clinica', name: 'profissional_clinica')]
+#[ORM\Entity(ProfissionalClinicaRepository::class)]
 class ProfissionalClinica{
     
     /**
