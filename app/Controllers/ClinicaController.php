@@ -37,6 +37,9 @@ class ClinicaController extends PageController
             case 'edited':
                 return AlertController::getSuccess('Clinica editada com sucesso!');
                 break;
+            case 'emptyClinic':
+                return AlertController::getError('Clinica nao encontrada');
+                break;
             default:
                 return '';
                 break;
