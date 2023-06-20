@@ -22,14 +22,14 @@ class ProfissionalClinica{
     /**
      * @var Clinica
      */
-    #[ManyToOne(targetEntity: Clinica::class)]
+    #[ManyToOne(targetEntity: Clinica::class, inversedBy: 'profissionaisClinica')]
     #[JoinColumn(name: 'clinica', referencedColumnName: 'id', nullable: false)]
     private $clinica;
 
     /**
      * @var Profissional
      */
-    #[ManyToOne(targetEntity: Profissional::class)]
+    #[ManyToOne(targetEntity: Profissional::class, inversedBy: 'profissionaisClinica')]
     #[JoinColumn(name: 'profissional', referencedColumnName: 'id', nullable: false)]
     private $profissional;
 

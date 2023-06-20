@@ -20,6 +20,7 @@ class AbstractRepository extends EntityRepository{
     {
         $entityManager = $this->getEntityManager();
         $entityManager->beginTransaction();
+        $entity = $entityManager->merge($entity);
         
         try{
             $entityManager->persist($entity);

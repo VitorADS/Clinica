@@ -3,7 +3,9 @@
 namespace App\Models\Entitys;
 
 use App\Models\Repository\ProfissionalRepository;
+use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping as ORM;
+use Doctrine\ORM\Mapping\OneToMany;
 
 #[ORM\Table(schema: 'clinica', name: 'profissional')]
 #[ORM\Entity(ProfissionalRepository::class)]
@@ -34,6 +36,22 @@ class Profissional{
      */
     #[ORM\Column(name: 'email', type:'string', nullable: false)]
     private $email;
+
+    /**
+     * @var ArrayCollection
+     */
+    #[OneToMany(targetEntity: ProfissionalClinica::class, mappedBy: 'profissional')]
+    private $profissionaisClinica;
+
+    public function __construct()
+    {
+        $this->profissionaisClinica = new ArrayCollection();
+    }
+
+    public function getProfissionaisClinica()
+    {
+        return $this->profissionaisClinica;
+    }
 
     /**
      * @return int

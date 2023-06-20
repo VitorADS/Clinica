@@ -20,7 +20,7 @@ class ProfissionalController extends PageController
 
         switch($queryParams['status']){
             case 'created':
-                return AlertController::getSuccess('Profissional criada com sucesso!');
+                return AlertController::getSuccess('Profissional criado com sucesso!');
                 break;
             case 'error':
                 return AlertController::getError('Houve algum erro ao tentar criar o Profissional!');

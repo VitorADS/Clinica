@@ -1,10 +1,12 @@
-<tr>
-    <td> {{nomeProfissional}} </td>
-    <td> {{emailProfissional}} </td>
-    <td> {{telefoneProfissional}} </td>
-    <td>
-        <a href="{{URL}}/clinic/profissionais/remover/{{idProfissional}}">
-            <button class="btn btn-danger">Excluir</button>
-        </a>
-    </td>
-</tr>
+<form method="POST">
+    <tr>
+        <td> {{nomeProfissional}} </td>
+        <td> {{emailProfissional}} </td>
+        <td> {{telefoneProfissional}} </td>
+        <td>
+            <a href="{{URL}}/clinic/profissionais/{{buttonaction}}/{{idClinica}}">
+                <button class="btn btn-{{buttonclass}}" id="button" name="id_profissional" value="{{idProfissional}}">{{buttonvalue}}</button>
+            </a>
+        </td>
+    </tr>
+</form>

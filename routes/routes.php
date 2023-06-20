@@ -13,4 +13,5 @@ $router->get('/', [
 
 include __DIR__ . '/Clinica/clinicaRotas.php';
 include __DIR__ . '/Profissional/profissionalRotas.php';
-include __DIR__ . '/profissionalClinica/rotas.php';
+include __DIR__ . '/profissionalClinica/rotasPC.php';
+include __DIR__ . '/Atendimento/rotasAtendimento.php';
