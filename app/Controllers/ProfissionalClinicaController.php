@@ -5,7 +5,6 @@ namespace App\Controllers;
 use App\Controllers\Pages\PageController;
 use App\Http\Request;
 use App\Models\Entitys\Clinica;
-use App\Models\Entitys\Profissional;
 use App\Models\Entitys\ProfissionalClinica;
 use App\Models\Repository\ClinicaRepository;
 use App\Models\Repository\ProfissionalClinicaRepository;
@@ -183,5 +182,37 @@ class ProfissionalClinicaController extends PageController
 
             $request->getRouter()->redirect('/clinic/profissionais/listar/' . $idClinica . '?status=removed');
         }
+    }
+
+    /**
+     * @param Request $request
+     * @param ProfissionalClinicaRepository $repository 
+     * @param int $idClinica
+     * @return array
+     */
+    public static function getAllProfissionaisClinica(Request $request, ProfissionalClinicaRepository $repository, int $idClinica): array
+    {
+        $retorno = [];
+
+        $profissionaisClinica = $repository->findBy(['clinica' => $idClinica]);
+
+        foreach($profissionaisClinica as $profissionalClinica){
+            $retorno['profissionais'][] = [
+                'id' => $profissionalClinica->getProfissional()->getId(),
+                'nome' => $profissionalClinica->getProfissional()->getNome()
+            ];
+        }
+
+        if(count($profissionaisClinica) > 0){
+            $retorno['clinica'] = [
+                'id' => end($profissionaisClinica)->getClinica()->getId(),
+                'nome' => end($profissionaisClinica)->getClinica()->getNome()
+            ];
+
+        } else {
+            $retorno['vazio'] = []; 
+        }
+        
+        return $retorno;
     }
 }

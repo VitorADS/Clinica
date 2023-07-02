@@ -1,0 +1,101 @@
+<h1 class="text-center">Criar Atendimento</h1><hr/>
+
+{{status}}
+
+<form action="POST" class="">
+	<div class="">
+		<div class="">
+			<select name="clinica" id="clinica" class="form-select">
+				<option value="">Selecione a clinica</option>
+				{{options}}
+			</select>
+		</div>
+		<br/>
+		<div class="">
+			<div class="card text-white bg-secondary dados-clinica">
+				<div class="card-header"></div>
+				<div class="card-body">
+					<div class="">
+						<h5 class="card-title">Preencha os dados:</h5>
+					</div>
+					<div class="row">
+						<div class="col col-lg-4">
+							<select name="profissional" id="profissional" class="form-select">
+							</select>
+						</div>
+						<div class="col">
+							za
+						</div>
+					</div> <br/>
+					<p class="card-text"><button class="btn btn-success" type="submit">Criar</button></p>
+				</div>
+			</div>
+		</div>
+	</div>
+</form>
+
+<script>
+	window.addEventListener('DOMContentLoaded', (event) => {
+		let dadosClinica = document.querySelector('.dados-clinica');
+		let clinica = document.querySelector('#clinica');
+
+		if(document.body.contains(dadosClinica) && document.body.contains(clinica)){
+			alteraDadosClinica(clinica, dadosClinica);
+
+			clinica.addEventListener('change', (event) => {
+				alteraDadosClinica(clinica, dadosClinica);
+			});
+		}
+	});
+
+	async function alteraDadosClinica(clinica, dadosClinica){
+		let buttonCriar = document.querySelector('#button_criar');
+
+		if(clinica.value == ''){
+			dadosClinica.classList.add('d-none');
+
+		} else {
+			await montaForm(clinica, dadosClinica);
+		}
+	}
+
+	async function getProfissionaisAndClinica(idClinica){
+		const headers = new Headers({
+				'X-Requested-With': 'XMLHttpRequest',
+				'Content-Type': 'application/json',
+				'Accept': 'application/json',
+				'credentials': 'same-origin'
+			});
+
+			const response = await fetch('{{URL}}/profissionalclinica/getall/' + idClinica, {
+				method: 'GET',
+				headers: headers
+			});
+
+			return await response.json();
+	}
+
+	async function montaForm(clinica, dadosClinica){
+		let profissionaisClinica = await getProfissionaisAndClinica(clinica.value);
+
+		if(typeof profissionaisClinica === 'object' && profissionaisClinica.hasOwnProperty('clinica') && profissionaisClinica.hasOwnProperty('profissionais')){
+			dadosClinica.classList.remove('d-none');
+			let header = dadosClinica.querySelector('.card-header');
+			let profissionais = dadosClinica.querySelector('#profissional');
+			console.log(profissionais);
+
+			header.innerHTML = 'Criando atendimento da clinica ' + profissionaisClinica.clinica.nome;
+
+			profissionaisClinica.profissionais.forEach(profissional => {
+				let optionValue = new Option(profissional.nome, profissional.id);
+				profissionais.appendChild(optionValue);
+			});
+
+		} else if(typeof profissionaisClinica === 'object' && profissionaisClinica.hasOwnProperty('vazio')){
+			alert('Nao existe nenhum profissional cadastrado na clinica!');
+
+		} else {
+			alert('Houve um erro ao obter os dados da clinica!');
+		}
+	}
+</script>

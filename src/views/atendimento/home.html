@@ -1,0 +1,21 @@
+<h1 class="text-center">Atendimentos</h1><hr/>
+
+<a href="{{URL}}/atendimento/criar">
+    <button class="btn btn-success">Novo Atendimento</button>
+</a><hr/>
+
+{{status}}
+
+<table class="table table-light table-striped text-center">
+    <thead>
+        <tr>
+            <th>Clinica</th>
+            <th>Profissional</th>
+            <th>Responsavel do Animal</th>
+            <th>Status</th>
+        </tr>
+    </thead>
+    <tbody>
+        {{atendimentos}}
+    </tbody>
+</table>

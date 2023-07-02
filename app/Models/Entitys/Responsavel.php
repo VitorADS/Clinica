@@ -84,7 +84,7 @@ class Responsavel{
     /**
      * @param string $telefone
      */
-    public function setTelefon(string $telefone)
+    public function setTelefone(string $telefone)
     {
         $this->telefone = $telefone;
     }

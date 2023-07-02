@@ -23,13 +23,13 @@ class Atendimento{
     /**
      * @var string
      */
-    #[ORM\Column(name: 'observacoes', type:'string', nullable: false)]
+    #[ORM\Column(name: 'observacoes', type:'string', nullable: true)]
     private $observacoes;
 
     /**
      * @var string
      */
-    #[ORM\Column(name: 'descricao', type:'string', nullable: false)]
+    #[ORM\Column(name: 'descricao', type:'string', nullable: true)]
     private $descricao;
 
     /**
@@ -70,7 +70,7 @@ class Atendimento{
      * @var Pagamento
      */
     #[ManyToOne(targetEntity: Pagamento::class)]
-    #[JoinColumn(name: 'pagamento', referencedColumnName: 'id', nullable: false)]
+    #[JoinColumn(name: 'pagamento', referencedColumnName: 'id', nullable: true)]
     private $pagamento;
 
     /**

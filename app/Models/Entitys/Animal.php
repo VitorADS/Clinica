@@ -4,9 +4,11 @@ namespace App\Models\Entitys;
 
 use DateInterval;
 use DateTime;
+use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping as ORM;
 use Doctrine\ORM\Mapping\JoinColumn;
 use Doctrine\ORM\Mapping\ManyToOne;
+use Doctrine\ORM\Mapping\OneToMany;
 
 #[ORM\Entity]
 #[ORM\Table(schema: 'clinica', name: 'animal')]
@@ -63,6 +65,17 @@ class Animal{
     #[ManyToOne(targetEntity: Raca::class)]
     #[JoinColumn(name: 'raca', referencedColumnName: 'id', nullable: false)]
     private $raca;
+
+    /**
+     * @var ArrayCollection
+     */
+    #[OneToMany(targetEntity: ResponsavelAnimal::class, mappedBy: 'animal')]
+    private $responsaveis;
+
+    public function __construct()
+    {
+        $this->responsaveis = new ArrayCollection();
+    }
 
     /**
      * @return int
@@ -187,5 +200,10 @@ class Animal{
     public function getIdade(): DateInterval
     {
         return $this->getDataNascimento()->diff(new DateTime());
+    }
+
+    public function getResponsaveis()
+    {
+        return $this->responsaveis;
     }
 }

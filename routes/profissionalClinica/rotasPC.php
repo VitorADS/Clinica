@@ -28,3 +28,12 @@ $router->post('/clinic/profissionais/cadastrar/{id}', [
         return new Response(200, ProfissionalClinicaController::cadastrarProfissionalAction($request, new ProfissionalClinicaRepository(), $id));
     }
 ]);
+
+$router->get('/profissionalclinica/getall/{id}', [
+    'middlewares' => [
+        'api'
+    ],
+    function ($request, $id){
+        return new Response(200, ProfissionalClinicaController::getAllProfissionaisClinica($request, new ProfissionalClinicaRepository(), $id), 'application/json');
+    }
+]);

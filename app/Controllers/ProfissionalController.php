@@ -7,7 +7,6 @@ use App\Http\Request;
 use App\Models\Entitys\Profissional;
 use App\Models\Repository\ProfissionalRepository;
 use App\Utils\View;
-use Doctrine\ORM\EntityRepository;
 
 class ProfissionalController extends PageController
 {
