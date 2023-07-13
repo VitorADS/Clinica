@@ -52,7 +52,7 @@ class ProfissionalClinicaController extends PageController
      */
     public static function getHome(Request $request, ClinicaRepository $clinicaRepository, int $id): string
     {
-        $clinica = $clinicaRepository->findOneBy(['id' => $id]);
+        $clinica = $clinicaRepository->find($id);
         $content = '';
 
         if(!$clinica instanceof Clinica){
@@ -101,7 +101,7 @@ class ProfissionalClinicaController extends PageController
             exit;
         }
 
-        $profissionalRepository = new ProfissionalRepository();
+        $profissionalRepository = new ProfissionalRepository($clinicaRepository->getEm());
         $profissionais = $profissionalRepository->getProfissionaisCadastraveis($clinica);
         $content = '';
 
@@ -145,11 +145,11 @@ class ProfissionalClinicaController extends PageController
         $profissionalClinica = $repository->findOneBy(['clinica' => $idClinica, 'profissional' => (int) $postVars['id_profissional']]);
 
         if(!$profissionalClinica instanceof ProfissionalClinica){
-            $clinicaRepository = new ClinicaRepository();
-            $profissionalRepository = new ProfissionalRepository();
+            $clinicaRepository = new ClinicaRepository($repository->getEm());
+            $profissionalRepository = new ProfissionalRepository($repository->getEm());
 
-            $clinica = $clinicaRepository->findOneBy(['id' => $idClinica]);
-            $profissional = $profissionalRepository->findOneBy(['id' => (int) $postVars['id_profissional']]);
+            $clinica = $clinicaRepository->find($idClinica);
+            $profissional = $profissionalRepository->find((int) $postVars['id_profissional']);
 
             $profissionalClinica = new ProfissionalClinica();
             $profissionalClinica->setClinica($clinica);

@@ -3,14 +3,15 @@
 namespace App\Models\Repository;
 
 use Config\EntityManager\EntityManagerCreator;
+use Doctrine\ORM\EntityManager;
 use Doctrine\ORM\EntityRepository;
 use Exception;
 
 class AbstractRepository extends EntityRepository{
 
-    public function __construct($class)
+    public function __construct($class, ?EntityManager $em = null)
     {
-        $em = EntityManagerCreator::getEntityManager();
+        if(!$em) $em = EntityManagerCreator::getEntityManager();
         $class = $em->getClassMetadata($class);
 
         parent::__construct($em, $class);
@@ -20,7 +21,6 @@ class AbstractRepository extends EntityRepository{
     {
         $entityManager = $this->getEntityManager();
         $entityManager->beginTransaction();
-        $entity = $entityManager->merge($entity);
         
         try{
             $entityManager->persist($entity);
@@ -37,10 +37,10 @@ class AbstractRepository extends EntityRepository{
 
     public function remove($entity)
     {
-        $entityManager = $this->getEntityManager();        
+        $entityManager = $this->getEntityManager();
 
         if(is_numeric($entity)){
-            $entity = $this->findOneBy(['id' => (int) $entity]);
+            $entity = $this->find((int) $entity);
         }
         
         $id = $entity->getId();
@@ -56,5 +56,10 @@ class AbstractRepository extends EntityRepository{
             $entityManager->getConnection()->rollback();
             throw $e;
         }
+    }
+
+    public function getEm()
+    {
+        return $this->getEntityManager();
     }
 }

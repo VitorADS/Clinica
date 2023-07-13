@@ -16,3 +16,5 @@ include __DIR__ . '/Profissional/profissionalRotas.php';
 include __DIR__ . '/profissionalClinica/rotasPC.php';
 include __DIR__ . '/Atendimento/rotasAtendimento.php';
 include __DIR__ . '/Responsavel/responsavelRotas.php';
+include __DIR__ . '/animal/animalRotas.php';
+include __DIR__ . '/responsavelAnimal/rotasRA.php';

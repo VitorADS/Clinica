@@ -88,9 +88,9 @@ class ResponsavelController extends PageController
     /**
      * @param Request $request
      * @param ResponsavelRepository $repository
-     * @return string
+     * @return void
      */
-    public static function criarResponsavelAction(Request $request, ResponsavelRepository $repository)
+    public static function criarResponsavelAction(Request $request, ResponsavelRepository $repository): void
     {
         $postVars = $request->getPostVars();
 
@@ -138,13 +138,18 @@ class ResponsavelController extends PageController
      * @param Request $request
      * @param int $id
      * @param ResponsavelRepository $repository
-     * @return string
+     * @return void
      */
-    public static function editarResponsavelAction(Request $request, int $id, ResponsavelRepository $repository)
+    public static function editarResponsavelAction(Request $request, int $id, ResponsavelRepository $repository): void
     {
-        $postVars = $request->getPostVars();
+        $responsavel = $repository->find($id);
 
-        $responsavel = new Responsavel();
+        if(!$responsavel instanceof Responsavel){
+            $request->getRouter()->redirect('/responsavel?status=emptyEdit');
+        }
+
+        $postVars = $request->getPostVars();
+        
         $responsavel->setNome($postVars['nome']);
         $responsavel->setEmail($postVars['email']);
         $responsavel->setTelefone($postVars['telefone']);
@@ -156,9 +161,9 @@ class ResponsavelController extends PageController
     /**
      * @param Request $request
      * @param ProfissionalRepository $repository
-     * @return string
+     * @return void
      */
-    public static function removerResponsavelAction(Request $request, int $id, ResponsavelRepository $repository)
+    public static function removerResponsavelAction(Request $request, int $id, ResponsavelRepository $repository): void
     {
         $return = $repository->remove($id);
 

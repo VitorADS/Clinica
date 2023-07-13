@@ -2,9 +2,9 @@
 
 namespace App\Models\Entitys;
 
-use DateInterval;
 use DateTime;
 use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Criteria;
 use Doctrine\ORM\Mapping as ORM;
 use Doctrine\ORM\Mapping\JoinColumn;
 use Doctrine\ORM\Mapping\ManyToOne;
@@ -41,9 +41,9 @@ class Animal{
     private $peso;
 
     /**
-     * @var string
+     * @var float
      */
-    #[ORM\Column(name: 'altura', type:'string', nullable: false)]
+    #[ORM\Column(name: 'altura', type:'float', nullable: false)]
     private $altura;
 
     /**
@@ -63,7 +63,7 @@ class Animal{
      * @var Raca
      */
     #[ManyToOne(targetEntity: Raca::class)]
-    #[JoinColumn(name: 'raca', referencedColumnName: 'id', nullable: false)]
+    #[JoinColumn(name: 'raca', referencedColumnName: 'id', nullable: true)]
     private $raca;
 
     /**
@@ -72,15 +72,22 @@ class Animal{
     #[OneToMany(targetEntity: ResponsavelAnimal::class, mappedBy: 'animal')]
     private $responsaveis;
 
+    /**
+     * @var ArrayCollection
+     */
+    #[OneToMany(targetEntity: Atendimento::class, mappedBy: 'animal')]
+    private $atendimentos;
+
     public function __construct()
     {
         $this->responsaveis = new ArrayCollection();
+        $this->atendimentos = new ArrayCollection();
     }
 
     /**
      * @return int
      */
-    public function getId(): int
+    public function getId(): ?int
     {
         return $this->id;
     }
@@ -134,17 +141,17 @@ class Animal{
     }
 
     /**
-     * @return string
+     * @return float
      */
-    public function getAltura(): string
+    public function getAltura(): float
     {
         return $this->altura;
     }
 
     /**
-     * @param string $altura
+     * @param float $altura
      */
-    public function setAltura(string $altura)
+    public function setAltura(float $altura)
     {
         $this->altura = $altura;
     }
@@ -158,7 +165,7 @@ class Animal{
     }
 
     /**
-     * @param DateTime $altura
+     * @param DateTime $dataNascimento
      */
     public function setDataNascimento(DateTime $dataNascimento)
     {
@@ -176,7 +183,7 @@ class Animal{
     /**
      * @param Tipo $tipo
      */
-    public function setTipo(string $tipo)
+    public function setTipo(Tipo $tipo)
     {
         $this->tipo = $tipo;
     }
@@ -184,26 +191,40 @@ class Animal{
     /**
      * @return Raca
      */
-    public function getRaca(): Raca
+    public function getRaca(): ?Raca
     {
         return $this->raca;
     }
 
     /**
-     * @param Raca $tipo
+     * @param Raca $raca
      */
-    public function setRaca(Raca $raca)
+    public function setRaca(?Raca $raca = null)
     {
         $this->raca = $raca;
     }
 
-    public function getIdade(): DateInterval
+    public function getIdade(): string
     {
-        return $this->getDataNascimento()->diff(new DateTime());
+        return $this->getDataNascimento()->diff(new DateTime())->format('%y anos, %m meses e %d dias');
     }
 
     public function getResponsaveis()
     {
         return $this->responsaveis;
+    }
+
+    public function getAtendimentos()
+    {
+        return $this->atendimentos;
+    }
+
+    public function getResponsavelPadrao(): ?ResponsavelAnimal
+    {
+        $criteria = Criteria::create();
+        $criteria->where($criteria->expr()->eq('padrao', true));
+        $result = $this->getResponsaveis()->matching($criteria);
+
+        return $result->count() === 1 ? $result->first() : null;
     }
 }

@@ -1,0 +1,26 @@
+<h1 class="text-center">Animais</h1><hr/>
+
+<a href="{{URL}}/animal/criar">
+    <button class="btn btn-success">Cadastrar Animal</button>
+</a><hr/>
+
+{{status}}
+
+<table class="table table-light table-striped text-center">
+    <thead>
+        <tr>
+            <th>Nome</th>
+            <th>Tipo</th>
+            <th>Raca</th>
+            <th>Cor</th>
+            <th>Peso</th>
+            <th>Altura</th>
+            <th>Idade</th>
+            <th>Responsavel Padrao</th>
+            <th>Acoes</th>
+        </tr>
+    </thead>
+    <tbody>
+        {{animais}}
+    </tbody>
+</table>

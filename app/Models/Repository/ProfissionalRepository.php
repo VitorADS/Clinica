@@ -5,12 +5,13 @@ namespace App\Models\Repository;
 use App\Models\Entitys\Clinica;
 use App\Models\Entitys\Profissional;
 use App\Models\Entitys\ProfissionalClinica;
+use Doctrine\ORM\EntityManager;
 
 class ProfissionalRepository extends AbstractRepository
 {
-    public function __construct()
+    public function __construct(?EntityManager $em = null)
     {
-        parent::__construct(Profissional::class);
+        parent::__construct(Profissional::class, $em);
     }
 
     public function getProfissionaisCadastraveis(Clinica $clinica)

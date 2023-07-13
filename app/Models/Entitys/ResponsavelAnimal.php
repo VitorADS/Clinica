@@ -2,6 +2,7 @@
 
 namespace App\Models\Entitys;
 use Doctrine\ORM\Mapping as ORM;
+use Doctrine\ORM\Mapping\Column;
 use Doctrine\ORM\Mapping\JoinColumn;
 use Doctrine\ORM\Mapping\ManyToOne;
 
@@ -32,9 +33,15 @@ class ResponsavelAnimal{
     private $responsavel;
 
     /**
+     * @var bool
+     */
+    #[ORM\Column(name: 'padrao', type:'boolean', nullable: false, options: ['default' => false])]
+    private $padrao;
+
+    /**
      * @return int
      */
-    public function getId(): int
+    public function getId(): ?int
     {
         return $this->id;
     }
@@ -69,5 +76,21 @@ class ResponsavelAnimal{
     public function setResponsavel(Responsavel $responsavel)
     {
         $this->responsavel = $responsavel;
+    }
+
+    /**
+     * @return bool
+     */
+    public function getPadrao(): bool
+    {
+        return $this->padrao;
+    }
+
+    /**
+     * @param bool $padrao
+     */
+    public function setPadrao(bool $padrao)
+    {
+        $this->padrao = $padrao;
     }
 }
