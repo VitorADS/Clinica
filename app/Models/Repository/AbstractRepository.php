@@ -58,7 +58,10 @@ class AbstractRepository extends EntityRepository{
         }
     }
 
-    public function getEm()
+    /**
+     * @return EntityManager
+     */
+    public function getEm(): EntityManager
     {
         return $this->getEntityManager();
     }

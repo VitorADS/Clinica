@@ -1,10 +1,12 @@
 <?php
 
 namespace App\Models\Entitys;
+
+use App\Models\Repository\PagamentoRepository;
 use Doctrine\ORM\Mapping as ORM;
 
-#[ORM\Entity]
 #[ORM\Table(schema: 'clinica', name: 'pagamento')]
+#[ORM\Entity(PagamentoRepository::class)]
 class Pagamento{
     
     /**

@@ -2,6 +2,7 @@
 
 namespace App\Models\Entitys;
 
+use App\Models\Repository\AnimalRepository;
 use DateTime;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Criteria;
@@ -10,8 +11,8 @@ use Doctrine\ORM\Mapping\JoinColumn;
 use Doctrine\ORM\Mapping\ManyToOne;
 use Doctrine\ORM\Mapping\OneToMany;
 
-#[ORM\Entity]
 #[ORM\Table(schema: 'clinica', name: 'animal')]
+#[ORM\Entity(AnimalRepository::class)]
 class Animal{
     
     /**

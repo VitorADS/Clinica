@@ -1,10 +1,12 @@
 <?php
 
 namespace App\Models\Entitys;
+
+use App\Models\Repository\RacaRepository;
 use Doctrine\ORM\Mapping as ORM;
 
-#[ORM\Entity]
 #[ORM\Table(schema: 'clinica', name: 'raca')]
+#[ORM\Entity(RacaRepository::class)]
 class Raca{
     
     /**

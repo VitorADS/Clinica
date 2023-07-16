@@ -1,38 +1,72 @@
-<h1 class="text-center">Criar Atendimento</h1><hr/>
+<h1 class="text-center">{{action}} Atendimento</h1><hr/>
 
 {{status}}
 
-<form action="POST" class="">
-	<div class="">
-		<div class="">
-			<select name="clinica" id="clinica" class="form-select">
-				<option value="">Selecione a clinica</option>
-				{{options}}
-			</select>
-		</div>
+<form method="POST">
+	<select name="clinica" id="clinica" class="form-select">
+		{{clinicas}}
+	</select>
 		<br/>
-		<div class="">
-			<div class="card text-white bg-secondary dados-clinica">
-				<div class="card-header"></div>
-				<div class="card-body">
-					<div class="">
-						<h5 class="card-title">Preencha os dados:</h5>
-					</div>
-					<div class="row">
-						<div class="col col-lg-4">
-							<select name="profissional" id="profissional" class="form-select">
-							</select>
-						</div>
-						<div class="col">
-							za
-						</div>
-					</div> <br/>
-					<p class="card-text"><button class="btn btn-success" type="submit">Criar</button></p>
-				</div>
+	<div class="dados-clinica">
+		<div class="mb-3 row">
+			<label for="animal" class="col-sm-2 col-form-label">Animal</label>
+			<div class="col-sm-10">
+				<select name="animal" id="animal" class="form-select">
+					{{animal}}
+				</select>
+			</div>
+		</div>
+		<div class="mb-3 row">
+			<label for="date" class="col-sm-2 col-form-label">Data Atendimento</label>
+			<div class="col-sm-10">
+			<input type="date" class="form-control" id="date" name="date" value="{{dataAtendimento}}"/>
+			</div>
+		</div>
+		<div class="mb-3 row">
+			<label for="descricao" class="col-sm-2 col-form-label">Descricao</label>
+			<div class="col-sm-10">
+			<input type="text" class="form-control" id="descricao" name="descricao" value="{{descricao}}" />
+			</div>
+		</div>
+		<div class="mb-3 row">
+			<label for="profissional" class="col-sm-2 col-form-label">Profissional</label>
+			<div class="col-sm-10">
+				<select name="profissional" id="profissional" class="form-select">
+				</select>
+			</div>
+		</div>
+		<div class="mb-3 row">
+			<label for="status_atendimento" class="col-sm-2 col-form-label">Status Atendimento</label>
+			<div class="col-sm-10">
+				<select name="status_atendimento" id="status_atendimento" class="form-select">
+					{{statusAtendimento}}
+				</select>
+			</div>
+		</div>
+		<div class="mb-3 row">
+			<label for="pagamento" class="col-sm-2 col-form-label">Pagamento</label>
+			<div class="col-sm-10">
+				<select name="pagamento" id="pagamento" class="form-select">
+					{{pagamento}}
+				</select>
+			</div>
+		</div>
+		<div class="mb-3 row">
+			<label for="observacao" class="col-sm-2 col-form-label">Observacoes</label>
+			<div class="col-sm-10">
+			<textarea class="form-control" name="observacao" id="observacao" rows="3">{{observacao}}</textarea>
+			</div>
+		</div>
+		<div class="mb-3 row">
+			<div class="col-sm-10">
+				<button class="btn btn-success " type="submit">{{action}}</button>
 			</div>
 		</div>
 	</div>
 </form>
+
+{{vacinasAtendimento}}
+{{modal}}
 
 <script>
 	window.addEventListener('DOMContentLoaded', (event) => {
@@ -50,29 +84,24 @@
 
 	async function alteraDadosClinica(clinica, dadosClinica){
 		let buttonCriar = document.querySelector('#button_criar');
-
-		if(clinica.value == ''){
-			dadosClinica.classList.add('d-none');
-
-		} else {
-			await montaForm(clinica, dadosClinica);
-		}
+		dadosClinica.classList.add('d-none');
+		await montaForm(clinica, dadosClinica);
 	}
 
 	async function getProfissionaisAndClinica(idClinica){
 		const headers = new Headers({
 				'X-Requested-With': 'XMLHttpRequest',
 				'Content-Type': 'application/json',
-				'Accept': 'application/json',
-				'credentials': 'same-origin'
-			});
+				'Accept': 'application/json'
+		});
 
-			const response = await fetch('{{URL}}/profissionalclinica/getall/' + idClinica, {
-				method: 'GET',
-				headers: headers
-			});
+		const response = await fetch('{{URL}}/profissionalclinica/getall/' + idClinica, {
+			method: 'GET',
+			headers: headers,
+			credentials: 'same-origin'
+		});
 
-			return await response.json();
+		return await response.json();
 	}
 
 	async function montaForm(clinica, dadosClinica){
@@ -80,11 +109,8 @@
 
 		if(typeof profissionaisClinica === 'object' && profissionaisClinica.hasOwnProperty('clinica') && profissionaisClinica.hasOwnProperty('profissionais')){
 			dadosClinica.classList.remove('d-none');
-			let header = dadosClinica.querySelector('.card-header');
 			let profissionais = dadosClinica.querySelector('#profissional');
-			console.log(profissionais);
-
-			header.innerHTML = 'Criando atendimento da clinica ' + profissionaisClinica.clinica.nome;
+			limpaSelect(profissionais);
 
 			profissionaisClinica.profissionais.forEach(profissional => {
 				let optionValue = new Option(profissional.nome, profissional.id);
@@ -97,5 +123,9 @@
 		} else {
 			alert('Houve um erro ao obter os dados da clinica!');
 		}
+	}
+
+	function limpaSelect(select){
+		select.textContent = '';
 	}
 </script>

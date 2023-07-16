@@ -18,3 +18,4 @@ include __DIR__ . '/Atendimento/rotasAtendimento.php';
 include __DIR__ . '/Responsavel/responsavelRotas.php';
 include __DIR__ . '/animal/animalRotas.php';
 include __DIR__ . '/responsavelAnimal/rotasRA.php';
+include __DIR__ . '/AtendimentoVacina/avRotas.php';

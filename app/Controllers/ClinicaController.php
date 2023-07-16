@@ -7,7 +7,6 @@ use App\Http\Request;
 use App\Models\Entitys\Clinica;
 use App\Models\Repository\ClinicaRepository;
 use App\Utils\View;
-use Doctrine\ORM\EntityRepository;
 
 class ClinicaController extends PageController
 {

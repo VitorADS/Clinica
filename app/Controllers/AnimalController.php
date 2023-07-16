@@ -75,6 +75,7 @@ class AnimalController extends PageController
                 'nome' => $animal->getNome(),
                 'tipo' => $animal->getTipo()->getTipo(),
                 'raca' => $animal->getRaca()->getRaca(),
+                'atendimento' => ComponentsController::createButton('atendimento/criar?animal=' . $animal->getId(), 'primary', 'Criar Atendimento'),
                 'cor' => $animal->getCor(),
                 'peso' => $animal->getPeso() . ' Kg',
                 'altura' => $animal->getAltura() . ' Cm',

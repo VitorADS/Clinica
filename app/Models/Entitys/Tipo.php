@@ -1,10 +1,12 @@
 <?php
 
 namespace App\Models\Entitys;
+
+use App\Models\Repository\TipoRepository;
 use Doctrine\ORM\Mapping as ORM;
 
-#[ORM\Entity]
 #[ORM\Table(schema: 'clinica', name: 'tipo')]
+#[ORM\Entity(TipoRepository::class)]
 class Tipo{
     
     /**

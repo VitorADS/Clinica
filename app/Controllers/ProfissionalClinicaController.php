@@ -198,7 +198,7 @@ class ProfissionalClinicaController extends PageController
 
         foreach($profissionaisClinica as $profissionalClinica){
             $retorno['profissionais'][] = [
-                'id' => $profissionalClinica->getProfissional()->getId(),
+                'id' => $profissionalClinica->getId(),
                 'nome' => $profissionalClinica->getProfissional()->getNome()
             ];
         }

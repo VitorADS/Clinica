@@ -1,13 +1,14 @@
 <?php
 
 namespace App\Models\Entitys;
+
+use App\Models\Repository\ResponsavelAnimalRepository;
 use Doctrine\ORM\Mapping as ORM;
-use Doctrine\ORM\Mapping\Column;
 use Doctrine\ORM\Mapping\JoinColumn;
 use Doctrine\ORM\Mapping\ManyToOne;
 
-#[ORM\Entity]
 #[ORM\Table(schema: 'clinica', name: 'responsavel_animal')]
+#[ORM\Entity(ResponsavelAnimalRepository::class)]
 class ResponsavelAnimal{
     
     /**

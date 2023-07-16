@@ -1,12 +1,16 @@
 <?php
 
 namespace App\Models\Entitys;
+
+use App\Models\Repository\AtendimentoVacinaRepository;
+use DateTime;
 use Doctrine\ORM\Mapping as ORM;
 use Doctrine\ORM\Mapping\JoinColumn;
 use Doctrine\ORM\Mapping\ManyToOne;
 
-#[ORM\Entity]
 #[ORM\Table(schema: 'clinica', name: 'atendimento_vacina')]
+#[ORM\Entity(AtendimentoVacinaRepository::class)]
+#[ORM\HasLifecycleCallbacks]
 class AtendimentoVacina{
     
     /**
@@ -31,6 +35,11 @@ class AtendimentoVacina{
     #[JoinColumn(name: 'vacina', referencedColumnName: 'id', nullable: false)]
     private $vacina;
 
+    /**
+     * @var DateTime
+     */
+    #[ORM\Column(name: 'createdat', type:'datetime', nullable: false , options: ['default' => 'CURRENT_TIMESTAMP'])]
+    private $createdAt;
 
     /**
      * @return int
@@ -84,5 +93,19 @@ class AtendimentoVacina{
         $this->vacina = $vacina;
 
         return $this;
+    }
+
+    /**
+     * @return DateTime
+     */
+    public function getCreatedAt(): DateTime
+    {
+        return $this->createdAt;
+    }
+
+    #[ORM\PrePersist]
+    public function prePersist(): void
+    {
+        $this->createdAt = new DateTime();
     }
 }

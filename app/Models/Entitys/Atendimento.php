@@ -2,14 +2,14 @@
 
 namespace App\Models\Entitys;
 
-use DateInterval;
+use App\Models\Repository\AtendimentoRepository;
 use DateTime;
 use Doctrine\ORM\Mapping as ORM;
 use Doctrine\ORM\Mapping\JoinColumn;
 use Doctrine\ORM\Mapping\ManyToOne;
 
-#[ORM\Entity]
 #[ORM\Table(schema: 'clinica', name: 'atendimento')]
+#[ORM\Entity(AtendimentoRepository::class)]
 class Atendimento{
     
     /**

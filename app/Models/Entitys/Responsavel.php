@@ -1,10 +1,12 @@
 <?php
 
 namespace App\Models\Entitys;
+
+use App\Models\Repository\ResponsavelRepository;
 use Doctrine\ORM\Mapping as ORM;
 
-#[ORM\Entity]
 #[ORM\Table(schema: 'clinica', name: 'responsavel')]
+#[ORM\Entity(ResponsavelRepository::class)]
 class Responsavel{
     
     /**

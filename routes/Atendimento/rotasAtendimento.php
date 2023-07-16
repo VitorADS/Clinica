@@ -2,8 +2,8 @@
 
 use App\Controllers\AtendimentoController;
 use App\Http\Response;
+use App\Models\Repository\AnimalRepository;
 use App\Models\Repository\AtendimentoRepository;
-use App\Models\Repository\ClinicaRepository;
 
 $router->get('/atendimento', [
     function($request){
@@ -13,6 +13,24 @@ $router->get('/atendimento', [
 
 $router->get('/atendimento/criar', [
     function($request){
-        return new Response(200, AtendimentoController::criarAtendimento($request, new AtendimentoRepository(), new ClinicaRepository()));
+        return new Response(200, AtendimentoController::criarAtendimento($request, new AnimalRepository()));
+    }
+]);
+
+$router->post('/atendimento/criar', [
+    function($request){
+        return new Response(200, AtendimentoController::criarAtendimentoAction($request, new AtendimentoRepository()));
+    }
+]);
+
+$router->get('/atendimento/editar/{id}', [
+    function($request, $id){
+        return new Response(200, AtendimentoController::editarAtendimento($request, new AtendimentoRepository(), $id));
+    }
+]);
+
+$router->post('/atendimento/editar/{id}', [
+    function($request, $id){
+        return new Response(200, AtendimentoController::editarAtendimentoAction($request, new AtendimentoRepository(), $id));
     }
 ]);
