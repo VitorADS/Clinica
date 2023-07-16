@@ -168,7 +168,7 @@ class AtendimentoController extends PageController
 
         $status = (new StatusAtendimentoRepository($atendimentoRepository->getEm()))->findAll();
         $pagamentos = (new PagamentoRepository($atendimentoRepository->getEm()))->findAll();
-        $atendimentoVacinas = (new AtendimentoVacinaRepository($atendimentoRepository->getEm()))->findAll();
+        $atendimentoVacinas = (new AtendimentoVacinaRepository($atendimentoRepository->getEm()))->findBy(['atendimento' => $atendimento]);
         $vacinas = (new VacinaRepository($atendimentoRepository->getEm()))->findAll();
         $vacinasList = '';
         $statusText = '';
@@ -253,7 +253,7 @@ class AtendimentoController extends PageController
 
         } else {
             $atendimento = $atendimentoRepository->find($id);
-            $status = 'updated';
+            $statusAtendimento = 'updated';
 
             if(!$atendimento instanceof Atendimento){
                 $request->getRouter()->redirect('/atendimento?status=atendimentoNotFound');
