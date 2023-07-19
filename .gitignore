@@ -1,6 +1,6 @@
 /vendor
+docker-compose.yml
 composer.lock
 .env
 .vscode
 php-apache.yml
-docker-compose.yml
