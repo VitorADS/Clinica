@@ -14,7 +14,7 @@ class HomeController extends PageController{
      */
     public static function getHome() : string
     {
-        $atendimentos = (new AtendimentoRepository())->findBy([], null, 5);
+        $atendimentos = (new AtendimentoRepository())->findBy([], ['data' => 'DESC'], 5);
         $textAtendimentos = '';
 
         /** @var Atendimento */
