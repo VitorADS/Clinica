@@ -12,21 +12,15 @@
 <p>Startar o apache (Pode-se utilizar laragon ou xampp);</p>
 <p>ir ate a pasta raiz do projeto e digitar o seguinte comando: docker-compose -f docker-compose.yml up -d</p>
 <p>Rodar os seguintes comandos para gerar as proxies das entidades e criar o banco de dados: </p>
-```sh
-php bin/doctrine orm:clear-cache:metadata 
-php bin/doctrine orm:generate-proxies 
-php bin/doctrine orm:schema-tool:create 
-```
 
-2. Clone the repo
    ```sh
-   git clone https://github.com/your_username_/Project-Name.git
+   php bin/doctrine orm:clear-cache:metadata 
    ```
-3. Install NPM packages
+
    ```sh
-   npm install
+   php bin/doctrine orm:generate-proxies 
    ```
-4. Enter your API in `config.js`
+
    ```js
-   const API_KEY = 'ENTER YOUR API';
+   php bin/doctrine orm:schema-tool:create 
    ```
