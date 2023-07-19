@@ -11,3 +11,9 @@
 
 <p>Startar o apache (Pode-se utilizar laragon ou xampp);</p>
 <p>ir ate a pasta raiz do projeto e digitar o seguinte comando: docker-compose -f docker-compose.yml up -d</p>
+<p>Rodar os seguintes comandos para gerar as proxies das entidades e criar o banco de dados: </p>
+```
+php bin/doctrine orm:clear-cache:metadata 
+php bin/doctrine orm:generate-proxies 
+php bin/doctrine orm:schema-tool:create 
+```
