@@ -105,7 +105,7 @@ class ResponsavelAnimalController extends PageController
                 'email' => $responsavel->getEmail(),
                 'telefone' => $responsavel->getTelefone(),
                 'padrao' => '',
-                'acao' => ComponentsController::createButton('animal/responsavel/adicionar/' . $animal->getId(), 'success', 'Adicionar', '', 'id_responsavel', $responsavel->getId())
+                'acao' => ComponentsController::createButton('animal/responsavel/adicionar/' . $animal->getId(), 'success', 'Adicionar', '', 'id_responsavel', $responsavel->getId(), 'submit')
             ]);
         }
 
