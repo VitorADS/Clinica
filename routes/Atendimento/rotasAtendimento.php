@@ -34,3 +34,9 @@ $router->post('/atendimento/editar/{id}', [
         return new Response(200, AtendimentoController::editarAtendimentoAction($request, new AtendimentoRepository(), $id));
     }
 ]);
+
+$router->get('/atendimento/remover/{id}', [
+    function($request, $id){
+        return new Response(200, AtendimentoController::removerAtendimentoAction($request, new AtendimentoRepository(), $id));
+    }
+]);

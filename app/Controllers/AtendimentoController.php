@@ -55,6 +55,9 @@ class AtendimentoController extends PageController
             case 'aplicacaoRemoved':
                 return AlertController::getSuccess('Aplicacao removida');
                 break;
+            case 'removed':
+                return AlertController::getSuccess('Atendimento removido');
+                break;
             default:
                 return '';
                 break;
@@ -284,5 +287,18 @@ class AtendimentoController extends PageController
         $atendimento = $atendimentoRepository->save($atendimento);
 
         $request->getRouter()->redirect('/atendimento/editar/' . $atendimento->getId() . '?status=' . $statusAtendimento);
+    }
+
+    /**
+     * @param Request $request
+     * @param AtendimentoRepository $atendimentoRepository
+     * @param int $id
+     * @return void
+     */
+    public static function removerAtendimentoAction($request, AtendimentoRepository $atendimentoRepository, $id)
+    {
+        $atendimentoRepository->remove($id);
+
+        $request->getRouter()->redirect('/atendimento?status=removed');
     }
 }
